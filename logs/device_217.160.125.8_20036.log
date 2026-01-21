@@ -1,0 +1,18 @@
+2026-01-21 20:52:31,395 | device:217.160.125.8:20036 | INFO | Worker started. device=217.160.125.8:20036 account=acc_001
+2026-01-21 20:56:53,387 | device:217.160.125.8:20036 | ERROR | Tick error: OpenCV(4.13.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\templmatch.cpp:1179: error: (-215:Assertion failed) _img.size().height <= _templ.size().height && _img.size().width <= _templ.size().width in function 'cv::matchTemplate'
+Traceback (most recent call last):
+  File "D:\work_\AAM\TT_FARM\main.py", line 24, in run_worker
+    sm.tick()
+  File "D:\work_\AAM\TT_FARM\logic\state_machine.py", line 37, in tick
+    self.warmup.tick()
+  File "D:\work_\AAM\TT_FARM\workflows\warmup.py", line 34, in tick
+    f = self.ui.find_follow_plus(img)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\work_\AAM\TT_FARM\vision\tiktok_ui.py", line 50, in find_follow_plus
+    hit = match_template(roi, self.tpl_follow_plus, self.th)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\work_\AAM\TT_FARM\vision\match.py", line 22, in match_template
+    res = cv2.matchTemplate(hay, tpl, cv2.TM_CCOEFF_NORMED)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+cv2.error: OpenCV(4.13.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\templmatch.cpp:1179: error: (-215:Assertion failed) _img.size().height <= _templ.size().height && _img.size().width <= _templ.size().width in function 'cv::matchTemplate'
+

@@ -1,0 +1,37 @@
+farm:
+  tick_seconds: 2
+  workers_max: 50
+
+adb:
+  autodiscover: true
+  include_prefix: "217.160.125.8:"   # опционально
+  screencap_mode: "exec-out"
+
+vision:
+  match_threshold: 0.78
+  roi_right_col_x_start_ratio: 0.62
+
+limits:
+  per_day:
+    likes: 60
+    follows: 20
+    comments: 3
+    views: 300
+  per_hour:
+    likes: 10
+    follows: 4
+    comments: 1
+    views: 60
+
+warmup:
+  view_seconds_min: 4
+  view_seconds_max: 12
+  swipe_chance: 0.80
+  like_chance: 0.18
+  follow_chance: 0.06
+  comment_chance: 0.02
+
+posting:
+  enabled: false
+  posts_per_day: 1
+  caption_max_len: 120

@@ -8,13 +8,22 @@ class AccountStore:
 
     def _load_all(self):
         accs = []
+        # If directory doesn't exist, create it (caller will handle empty store)
+        if not os.path.isdir(self.dir_path):
+            os.makedirs(self.dir_path, exist_ok=True)
+            return accs
+
         for fn in os.listdir(self.dir_path):
             if not fn.endswith(".json"):
                 continue
             path = os.path.join(self.dir_path, fn)
-            with open(path, "r", encoding="utf-8") as f:
-                d = json.load(f)
-            accs.append(Account(**d))
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    d = json.load(f)
+                accs.append(Account(**d))
+            except Exception:
+                # skip malformed files
+                continue
         return accs
 
     def pick_account_for_device(self, device_id: str) -> Account:

@@ -2,6 +2,9 @@ import cv2
 import numpy as np
 from dataclasses import dataclass
 from typing import Optional, Tuple
+import logging
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class Match:
@@ -16,6 +19,28 @@ def load_template(path: str) -> np.ndarray:
     return img
 
 def match_template(hay_bgr: np.ndarray, tpl_bgr: np.ndarray, threshold: float) -> Optional[Match]:
+    """Match template with safety checks.
+
+    Returns None when matching is impossible (e.g. template larger than image or invalid inputs).
+    """
+    if hay_bgr is None or tpl_bgr is None:
+        logger.debug("match_template: received None for haystack or template")
+        return None
+
+    # Ensure inputs are numpy arrays
+    try:
+        hay_shape = hay_bgr.shape
+        tpl_shape = tpl_bgr.shape
+    except Exception:
+        logger.debug("match_template: invalid image objects passed")
+        return None
+
+    # Template must not be larger than haystack
+    if tpl_shape[0] > hay_shape[0] or tpl_shape[1] > hay_shape[1]:
+        logger.debug("match_template: template %s is larger than haystack %s, skipping",
+                     tpl_shape, hay_shape)
+        return None
+
     hay = cv2.cvtColor(hay_bgr, cv2.COLOR_BGR2GRAY)
     tpl = cv2.cvtColor(tpl_bgr, cv2.COLOR_BGR2GRAY)
 
